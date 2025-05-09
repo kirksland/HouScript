@@ -1,0 +1,9 @@
+string fullpath[]= usd_attrib(0, @primpath, "primvars:shop_materialpath");
+string parts[] = split(fullpath[0], "/");
+string matname = parts[-1];
+string mat;
+printf("prim path %d\n",@primpath);
+mat = "/materials/" + matname;
+printf("mat %d\n",mat);
+return mat ;      
+     
