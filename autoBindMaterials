@@ -1,9 +1,19 @@
-string fullpath[]= usd_attrib(0, @primpath, "primvars:shop_materialpath");
-string parts[] = split(fullpath[0], "/");
-string matname = parts[-1];
-string mat;
-printf("prim path %d\n",@primpath);
-mat = "/materials/" + matname;
-printf("mat %d\n",mat);
-return mat ;      
-     
+string paths[] = usd_attrib(0, @primpath, "primvars:shop_materialpath");
+
+// Vérification si on a bien des données
+if (len(paths) == 0)
+    return "";
+
+// Nettoie la string (au cas où il y aurait des espaces vides)
+string raw_path = strip(paths[@elemnum]);
+
+// S’il est vide, retourne rien
+if (raw_path == "")
+    return "";
+
+// On extrait juste le nom du matériau
+string parts[] = split(raw_path, "/");
+string matname = parts[-1]; // dernière partie = "leaves", "blue", etc.
+
+// Construit le path correct dans le stage
+return "/materials/" + matname;
